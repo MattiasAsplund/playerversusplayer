@@ -27,17 +27,18 @@ namespace PlayerVersusPlayerLib
         {
             get
             {
-                return _players.OrderByDescending(p => p.hp).First();
+                return _players.OrderByDescending(p => p.Hp).First();
             }
         }
 
-        public void Attack(Player attacker, Player defender)
+        public void AttackBy(Player attacker)
         {
-            defender.defense -= attacker.damage;
-            if (defender.defense < 0)
+            Player defender = (attacker.Name == _players[0].Name) ? _players[1] : _players[0];
+            defender.Defense -= attacker.Damage;
+            if (defender.Defense < 0)
             {
-                defender.hp += defender.defense;
-                defender.defense = 0;
+                defender.Hp += defender.Defense;
+                defender.Defense = 0;
             }
             AttackReport?.Invoke(attacker, defender);
         }

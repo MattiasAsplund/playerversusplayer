@@ -14,21 +14,22 @@ namespace PlayerVersusPlayer.Tests
             this.output = output;
         }
         [Fact]
-        public void Winner_Depletes_Enemy()
+        public void Gentrit_Wins()
         {
-            var player1 = new Player("Player One", 100, 30, 50);
-            var player2 = new Player("Player Two", 100, 20, 70);
-            var sut = new PlayerVersusPlayerGame(player1, player2);
+            var gentrit = new Player("Gentrit", 100, 30, 50);
+            var mattias = new Player("Mattias", 100, 20, 70);
+            var sut = new PlayerVersusPlayerGame(gentrit, mattias);
             sut.AttackReport += (attacker, defender) =>
             {
-                output.WriteLine($"{attacker.name} attacked {defender.name}, resulting in HP:{defender.hp} Def:{defender.defense}");
+                output.WriteLine($"{attacker.Name} attacked {defender.Name}, resulting in HP:{defender.Hp} Def:{defender.Defense}");
             };
             while (!sut.GameOver)
             {
-                var player = sut.NextPlayer();
-                sut.Attack(player, (player.name == player1.name) ? player2 : player1);
+                var attackingPlayer = sut.NextPlayer();
+                sut.AttackBy(attackingPlayer);
             }
-            output.WriteLine($"And the winner is: " + sut.Winner.name);
+            output.WriteLine($"And the winner is: " + sut.Winner.Name);
+            Assert.Equal("Gentrit", sut.Winner.Name);
         }
     }
 }

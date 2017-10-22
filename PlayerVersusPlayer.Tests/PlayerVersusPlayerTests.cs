@@ -21,15 +21,21 @@ namespace PlayerVersusPlayer.Tests
             var sut = new PlayerVersusPlayerGame(gentrit, mattias);
             sut.AttackReport += (attacker, defender) =>
             {
-                output.WriteLine($"{attacker.Name} attacked {defender.Name}, resulting in HP:{defender.Hp} Def:{defender.Defense}");
+                Output($"{attacker.Name} attacked {defender.Name}, resulting in HP:{defender.Hp} Def:{defender.Defense}");
             };
             while (!sut.GameOver)
             {
                 var attackingPlayer = sut.NextPlayer();
                 sut.AttackBy(attackingPlayer);
             }
-            output.WriteLine($"And the winner is: " + sut.Winner.Name);
+            Output($"And the winner is: " + sut.Winner.Name);
             Assert.Equal("Gentrit", sut.Winner.Name);
+        }
+
+        private void Output(string message)
+        {
+            output.WriteLine(message);
+            Console.WriteLine(message);
         }
     }
 }
